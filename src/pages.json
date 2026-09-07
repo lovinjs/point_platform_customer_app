@@ -1,0 +1,39 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "平台积分"
+			}
+		},
+		{
+			"path": "pages/auth/login",
+			"style": {
+				"navigationBarTitleText": "微信登录"
+			}
+		},
+		{
+			"path": "pages/auth/callback",
+			"style": {
+				"navigationBarTitleText": "正在登录",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/bind-phone",
+			"style": {
+				"navigationBarTitleText": "绑定手机号"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "平台积分",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F4F7F5",
+		"backgroundTextStyle": "dark",
+		"rpxCalcMaxDeviceWidth": 600,
+		"rpxCalcBaseDeviceWidth": 375,
+		"rpxCalcIncludeWidth": 750
+	}
+}
