@@ -85,6 +85,43 @@
       </view>
     </view>
 
+    <view v-else class="security-card surface-card">
+      <view class="security-card__icon">
+        <wd-icon name="safe" size="38rpx" color="#168e5d" />
+      </view>
+      <view class="security-card__copy">
+        <text class="security-card__title">消费密码</text>
+        <text class="security-card__description">
+          {{ consumePinDescription }}
+        </text>
+      </view>
+      <wd-button
+        type="primary"
+        variant="soft"
+        size="small"
+        round
+        @click="goToConsumePin"
+      >
+        {{ consumePinActionText }}
+      </wd-button>
+    </view>
+
+    <view
+      v-if="auth.isAuthenticated.value && auth.user.value?.phoneBound && auth.user.value.consumePinConfigured"
+      class="consumption-card surface-card"
+    >
+      <view class="consumption-card__copy">
+        <text class="consumption-card__eyebrow">线下门店消费</text>
+        <text class="consumption-card__title">待确认消费</text>
+        <text class="consumption-card__description">
+          门店发起订单后，由你本人核对门店和金额并输入密码确认。
+        </text>
+      </view>
+      <wd-button type="primary" size="small" round @click="goToPendingConsumption">
+        查看订单
+      </wd-button>
+    </view>
+
     <wd-toast />
   </view>
 </template>
@@ -117,6 +154,14 @@ const balanceDisplay = computed(() =>
 const sessionHint = computed(() =>
   auth.isAuthenticated.value ? '账户已登录' : '当前未登录',
 )
+const consumePinDescription = computed(() =>
+  auth.user.value?.consumePinConfigured
+    ? '已设置，消费时由本人输入确认'
+    : '尚未设置，设置后才能确认消费',
+)
+const consumePinActionText = computed(() =>
+  auth.user.value?.consumePinConfigured ? '修改' : '设置',
+)
 
 const goToLogin = (): void => {
   uni.navigateTo({ url: '/pages/auth/login' })
@@ -124,6 +169,14 @@ const goToLogin = (): void => {
 
 const goToBindPhone = (): void => {
   uni.navigateTo({ url: '/pages/profile/bind-phone' })
+}
+
+const goToConsumePin = (): void => {
+  uni.navigateTo({ url: '/pages/profile/consume-pin' })
+}
+
+const goToPendingConsumption = (): void => {
+  uni.navigateTo({ url: '/pages/consumption/pending' })
 }
 
 const handleAvatarError = (): void => {
@@ -370,6 +423,89 @@ watch(
 .account-notice__title,
 .account-notice__description {
   display: block;
+}
+
+.security-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 28rpx;
+  padding: 26rpx 24rpx;
+}
+
+.security-card__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 22rpx;
+  background: #eef8f3;
+}
+
+.security-card__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.security-card__title,
+.security-card__description {
+  display: block;
+}
+
+.consumption-card {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-top: 28rpx;
+  padding: 30rpx 26rpx;
+  background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+}
+
+.consumption-card__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.consumption-card__eyebrow,
+.consumption-card__title,
+.consumption-card__description {
+  display: block;
+}
+
+.consumption-card__eyebrow {
+  color: #168e5d;
+  font-size: 20rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+.consumption-card__title {
+  margin-top: 7rpx;
+  color: #24382f;
+  font-size: 29rpx;
+  font-weight: 700;
+}
+
+.consumption-card__description {
+  margin-top: 8rpx;
+  color: #7b8a82;
+  font-size: 22rpx;
+  line-height: 1.55;
+}
+
+.security-card__title {
+  color: #24382f;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.security-card__description {
+  margin-top: 7rpx;
+  color: #7b8a82;
+  font-size: 22rpx;
+  line-height: 1.5;
 }
 
 .account-notice__title {

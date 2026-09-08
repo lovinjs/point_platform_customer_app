@@ -1,4 +1,5 @@
 import type {
+  ConsumePinStatus,
   CustomerAccountView,
   PhoneVerificationDispatchResult,
 } from '@/types/auth'
@@ -21,4 +22,19 @@ export const bindCustomerPhone = (
   put<CustomerAccountView>('/api/v1/customer/phone', {
     phone,
     verificationCode,
+  })
+
+export const getConsumePinStatus = (): Promise<ConsumePinStatus> =>
+  get<ConsumePinStatus>('/api/v1/customer/security/consume-pin/status')
+
+export const setCustomerConsumePin = (newPin: string): Promise<ConsumePinStatus> =>
+  post<ConsumePinStatus>('/api/v1/customer/security/consume-pin', { newPin })
+
+export const changeCustomerConsumePin = (
+  currentPin: string,
+  newPin: string,
+): Promise<ConsumePinStatus> =>
+  put<ConsumePinStatus>('/api/v1/customer/security/consume-pin', {
+    currentPin,
+    newPin,
   })

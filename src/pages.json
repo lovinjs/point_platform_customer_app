@@ -24,6 +24,20 @@
 			"style": {
 				"navigationBarTitleText": "绑定手机号"
 			}
+		},
+		{
+			"path": "pages/profile/consume-pin",
+			"style": {
+				"navigationBarTitleText": "消费密码"
+			}
+		},
+		{
+			"path": "pages/consumption/pending",
+			"style": {
+				"navigationBarTitleText": "确认消费",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark"
+			}
 		}
 	],
 	"globalStyle": {

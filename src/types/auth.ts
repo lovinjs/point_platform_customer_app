@@ -24,3 +24,10 @@ export interface PhoneVerificationDispatchResult {
   expiresInSeconds: number
   resendAfterSeconds: number
 }
+
+export interface ConsumePinStatus {
+  configured: boolean
+  locked: boolean
+  lockedUntil: string | null
+  pinUpdatedTime: string | null
+}
