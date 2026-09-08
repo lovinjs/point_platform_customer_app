@@ -122,6 +122,21 @@
       </wd-button>
     </view>
 
+    <view
+      v-if="auth.isAuthenticated.value"
+      class="transactions-card surface-card"
+      @click="goToTransactions"
+    >
+      <view class="transactions-card__icon">
+        <wd-icon name="list" size="38rpx" color="#168e5d" />
+      </view>
+      <view class="transactions-card__copy">
+        <text class="transactions-card__title">账单记录</text>
+        <text class="transactions-card__description">查看积分明细、充值和消费订单</text>
+      </view>
+      <wd-icon name="arrow-right" size="30rpx" color="#91a098" />
+    </view>
+
     <wd-toast />
   </view>
 </template>
@@ -177,6 +192,10 @@ const goToConsumePin = (): void => {
 
 const goToPendingConsumption = (): void => {
   uni.navigateTo({ url: '/pages/consumption/pending' })
+}
+
+const goToTransactions = (): void => {
+  uni.navigateTo({ url: '/pages/transactions/index' })
 }
 
 const handleAvatarError = (): void => {
@@ -452,6 +471,47 @@ watch(
 .security-card__title,
 .security-card__description {
   display: block;
+}
+
+.transactions-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 28rpx;
+  padding: 26rpx 24rpx;
+}
+
+.transactions-card__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 22rpx;
+  background: #eef8f3;
+}
+
+.transactions-card__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.transactions-card__title,
+.transactions-card__description {
+  display: block;
+}
+
+.transactions-card__title {
+  color: #24382f;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.transactions-card__description {
+  margin-top: 7rpx;
+  color: #7b8a82;
+  font-size: 22rpx;
 }
 
 .consumption-card {

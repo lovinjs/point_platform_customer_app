@@ -1,0 +1,6 @@
+{
+  "i18n-ally.localesPaths": [
+    "src/uni_modules/wot-ui/locale",
+    "src/uni_modules/wot-ui/locale/lang"
+  ]
+}

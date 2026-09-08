@@ -38,6 +38,15 @@
 				"enablePullDownRefresh": true,
 				"backgroundTextStyle": "dark"
 			}
+		},
+		{
+			"path": "pages/transactions/index",
+			"style": {
+				"navigationBarTitleText": "账单记录",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark",
+				"onReachBottomDistance": 80
+			}
 		}
 	],
 	"globalStyle": {
