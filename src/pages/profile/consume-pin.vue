@@ -72,6 +72,10 @@
         {{ configured ? '确认修改' : '确认设置' }}
       </wd-button>
 
+      <text v-if="configured" class="forgot-link" @click="goToResetPin">
+        忘记消费密码？通过手机号验证重置
+      </text>
+
       <text v-if="configured && updatedTimeText" class="updated-time">
         上次修改：{{ updatedTimeText }}
       </text>
@@ -238,6 +242,10 @@ const submit = async (): Promise<void> => {
   }
 }
 
+const goToResetPin = (): void => {
+  uni.navigateTo({ url: '/pages/profile/reset-consume-pin' })
+}
+
 onShow(() => {
   if (!auth.isAuthenticated.value) {
     uni.reLaunch({ url: '/pages/auth/login' })
@@ -344,6 +352,14 @@ onShow(() => {
   margin-top: 22rpx;
   color: #8b9891;
   font-size: 21rpx;
+  text-align: center;
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 24rpx;
+  color: #168e5d;
+  font-size: 23rpx;
   text-align: center;
 }
 

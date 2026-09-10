@@ -31,3 +31,8 @@ export interface ConsumePinStatus {
   lockedUntil: string | null
   pinUpdatedTime: string | null
 }
+
+export interface ConsumePinResetTokenResult {
+  resetToken: string
+  expiresInSeconds: number
+}

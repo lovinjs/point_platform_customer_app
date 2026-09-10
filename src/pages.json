@@ -32,6 +32,12 @@
 			}
 		},
 		{
+			"path": "pages/profile/reset-consume-pin",
+			"style": {
+				"navigationBarTitleText": "重置消费密码"
+			}
+		},
+		{
 			"path": "pages/consumption/pending",
 			"style": {
 				"navigationBarTitleText": "确认消费",

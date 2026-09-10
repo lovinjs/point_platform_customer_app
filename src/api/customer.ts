@@ -1,5 +1,6 @@
 import type {
   ConsumePinStatus,
+  ConsumePinResetTokenResult,
   CustomerAccountView,
   PhoneVerificationDispatchResult,
 } from '@/types/auth'
@@ -36,5 +37,27 @@ export const changeCustomerConsumePin = (
 ): Promise<ConsumePinStatus> =>
   put<ConsumePinStatus>('/api/v1/customer/security/consume-pin', {
     currentPin,
+    newPin,
+  })
+
+export const requestConsumePinResetVerificationCode = (): Promise<PhoneVerificationDispatchResult> =>
+  post<PhoneVerificationDispatchResult>(
+    '/api/v1/customer/security/consume-pin/reset/verification-codes',
+    {},
+  )
+
+export const createConsumePinResetToken = (
+  verificationCode: string,
+): Promise<ConsumePinResetTokenResult> =>
+  post<ConsumePinResetTokenResult>('/api/v1/customer/security/consume-pin/reset/tokens', {
+    verificationCode,
+  })
+
+export const resetCustomerConsumePin = (
+  resetToken: string,
+  newPin: string,
+): Promise<ConsumePinStatus> =>
+  put<ConsumePinStatus>('/api/v1/customer/security/consume-pin/reset', {
+    resetToken,
     newPin,
   })
