@@ -52,6 +52,18 @@
       </view>
     </view>
 
+    <view class="stores-card surface-card" @click="goToStores">
+      <view class="stores-card__icon">
+        <wd-icon name="store" size="40rpx" color="#168e5d" />
+      </view>
+      <view class="stores-card__copy">
+        <text class="stores-card__eyebrow">无需登录即可查看</text>
+        <text class="stores-card__title">合作门店</text>
+        <text class="stores-card__description">查找可充值、可使用积分的线下门店</text>
+      </view>
+      <wd-icon name="arrow-right" size="30rpx" color="#91a098" />
+    </view>
+
     <view v-if="!auth.isAuthenticated.value" class="login-panel surface-card">
       <text class="login-panel__title">登录后查看积分</text>
       <text class="login-panel__description">
@@ -196,6 +208,10 @@ const goToPendingConsumption = (): void => {
 
 const goToTransactions = (): void => {
   uni.navigateTo({ url: '/pages/transactions/index' })
+}
+
+const goToStores = (): void => {
+  uni.navigateTo({ url: '/pages/stores/index' })
 }
 
 const handleAvatarError = (): void => {
@@ -500,6 +516,57 @@ watch(
 .transactions-card__title,
 .transactions-card__description {
   display: block;
+}
+
+.stores-card {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 28rpx;
+  padding: 28rpx 24rpx;
+  background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+}
+
+.stores-card__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 23rpx;
+  background: #e8f7f0;
+}
+
+.stores-card__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.stores-card__eyebrow,
+.stores-card__title,
+.stores-card__description {
+  display: block;
+}
+
+.stores-card__eyebrow {
+  color: #168e5d;
+  font-size: 19rpx;
+  letter-spacing: 1rpx;
+}
+
+.stores-card__title {
+  margin-top: 5rpx;
+  color: #24382f;
+  font-size: 29rpx;
+  font-weight: 650;
+}
+
+.stores-card__description {
+  margin-top: 7rpx;
+  color: #7b8a82;
+  font-size: 22rpx;
+  line-height: 1.5;
 }
 
 .transactions-card__title {

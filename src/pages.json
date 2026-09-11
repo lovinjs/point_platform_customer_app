@@ -53,6 +53,21 @@
 				"backgroundTextStyle": "dark",
 				"onReachBottomDistance": 80
 			}
+		},
+		{
+			"path": "pages/stores/index",
+			"style": {
+				"navigationBarTitleText": "合作门店",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark",
+				"onReachBottomDistance": 80
+			}
+		},
+		{
+			"path": "pages/stores/detail",
+			"style": {
+				"navigationBarTitleText": "门店详情"
+			}
 		}
 	],
 	"globalStyle": {
