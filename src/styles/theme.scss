@@ -1,0 +1,82 @@
+/*
+ * 低空科技主题
+ *
+ * 品牌色负责身份识别，状态色只表达业务结果。页面样式应优先使用这些
+ * 语义变量，避免直接写具体颜色，后续换肤时只需要调整本文件。
+ */
+:root,
+page {
+  /* 品牌色阶 */
+  --app-color-primary-50: #f2f6ff;
+  --app-color-primary-100: #e5edff;
+  --app-color-primary-200: #c7d9ff;
+  --app-color-primary-300: #9ebcff;
+  --app-color-primary-400: #6f9bff;
+  --app-color-primary-500: #246bfd;
+  --app-color-primary-600: #1e59d8;
+  --app-color-primary-700: #1948ae;
+  --app-color-primary-800: #153c89;
+  --app-color-primary-900: #102a43;
+
+  --app-color-primary: var(--app-color-primary-500);
+  --app-color-primary-deep: var(--app-color-primary-900);
+  --app-color-accent: #21b8c7;
+
+  /* 业务状态色 */
+  --app-color-success: #16a36a;
+  --app-color-success-soft: #eaf8f0;
+  --app-color-warning: #f59e0b;
+  --app-color-warning-text: #8a5a10;
+  --app-color-warning-soft: #fff8e8;
+  --app-color-warning-badge: #ffedc2;
+  --app-color-warning-border: #f3d79b;
+  --app-color-danger: #d64545;
+
+  /* 中性色与表面 */
+  --app-color-text: #172033;
+  --app-color-text-strong: #102a43;
+  --app-color-text-secondary: #667085;
+  --app-color-text-muted: #8a94a6;
+  --app-color-text-placeholder: #a8b0bf;
+  --app-color-background: #f4f7fa;
+  --app-color-background-wide: #e9eef5;
+  --app-color-surface: #ffffff;
+  --app-color-surface-soft: #f8faff;
+  --app-color-border: #e6eaf0;
+  --app-color-border-strong: #d8dee8;
+
+  /* 品牌色上的内容 */
+  --app-color-on-brand: #ffffff;
+  --app-color-on-brand-strong: rgba(255, 255, 255, 0.86);
+  --app-color-on-brand-muted: rgba(255, 255, 255, 0.74);
+  --app-color-on-brand-subtle: rgba(255, 255, 255, 0.62);
+  --app-color-on-brand-border: rgba(255, 255, 255, 0.24);
+  --app-color-on-brand-surface: rgba(255, 255, 255, 0.14);
+
+  /* 渐变与阴影 */
+  --app-gradient-brand: linear-gradient(135deg, #1948ae 0%, #246bfd 62%, #21b8c7 100%);
+  --app-gradient-brand-soft: linear-gradient(145deg, #e5edff 0%, #eefafd 100%);
+  --app-gradient-success: linear-gradient(135deg, #116d4a 0%, #16a36a 100%);
+  --app-shadow-card: 0 12rpx 40rpx rgba(16, 42, 67, 0.07);
+  --app-shadow-brand: 0 22rpx 48rpx rgba(36, 107, 253, 0.22);
+  --app-shadow-success: 0 20rpx 44rpx rgba(22, 163, 106, 0.22);
+  --app-shadow-avatar: 0 10rpx 28rpx rgba(16, 42, 67, 0.14);
+
+  /* Wot UI 品牌与状态映射 */
+  --wot-primary-1: var(--app-color-primary-50);
+  --wot-primary-2: var(--app-color-primary-100);
+  --wot-primary-3: var(--app-color-primary-200);
+  --wot-primary-4: var(--app-color-primary-300);
+  --wot-primary-5: var(--app-color-primary-400);
+  --wot-primary-6: var(--app-color-primary-500);
+  --wot-primary-7: var(--app-color-primary-600);
+  --wot-primary-8: var(--app-color-primary-700);
+  --wot-primary-9: var(--app-color-primary-800);
+  --wot-primary-10: var(--app-color-primary-900);
+  --wot-feedback-accent: rgba(36, 107, 253, 0.1);
+  --wot-success-main: var(--app-color-success);
+  --wot-success-surface: var(--app-color-success-soft);
+  --wot-warning-main: var(--app-color-warning);
+  --wot-warning-surface: var(--app-color-warning-soft);
+  --wot-danger-main: var(--app-color-danger);
+}

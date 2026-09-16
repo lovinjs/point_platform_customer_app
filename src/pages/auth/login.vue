@@ -21,6 +21,16 @@
       </view>
     </view>
 
+    <view class="agreement-row">
+      <wd-checkbox v-model="agreedToTerms" size="34rpx" />
+      <view class="agreement-row__copy" @click="toggleAgreement">
+        <text>我已阅读并同意</text>
+        <text class="agreement-link" @click.stop="openUserAgreement">《用户协议》</text>
+        <text>和</text>
+        <text class="agreement-link" @click.stop="openPrivacyPolicy">《隐私政策》</text>
+      </view>
+    </view>
+
     <wd-button
       type="primary"
       size="large"
@@ -44,10 +54,15 @@ import { getErrorMessage } from '@/api/error'
 import { startCustomerLogin } from '@/platform/auth'
 
 const authorizing = ref(false)
+const agreedToTerms = ref(false)
 const toast = useToast()
 
 const authorize = async (): Promise<void> => {
   if (authorizing.value) {
+    return
+  }
+  if (!agreedToTerms.value) {
+    toast.warning('请先阅读并同意用户协议和隐私政策')
     return
   }
   authorizing.value = true
@@ -57,6 +72,18 @@ const authorize = async (): Promise<void> => {
     toast.warning(getErrorMessage(error))
     authorizing.value = false
   }
+}
+
+const toggleAgreement = (): void => {
+  agreedToTerms.value = !agreedToTerms.value
+}
+
+const openUserAgreement = (): void => {
+  uni.navigateTo({ url: '/pages/legal/user-agreement' })
+}
+
+const openPrivacyPolicy = (): void => {
+  uni.navigateTo({ url: '/pages/legal/privacy-policy' })
 }
 </script>
 
@@ -74,9 +101,9 @@ const authorize = async (): Promise<void> => {
   height: 116rpx;
   margin: 0 auto 34rpx;
   border-radius: 34rpx;
-  background: linear-gradient(135deg, #0c6545, #26aa70);
-  box-shadow: 0 20rpx 44rpx rgba(16, 135, 85, 0.25);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
   font-size: 52rpx;
   font-weight: 700;
 }
@@ -88,7 +115,7 @@ const authorize = async (): Promise<void> => {
 }
 
 .login-title {
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 44rpx;
   font-weight: 700;
 }
@@ -96,13 +123,13 @@ const authorize = async (): Promise<void> => {
 .login-description {
   max-width: 590rpx;
   margin: 20rpx auto 52rpx;
-  color: #75847c;
+  color: var(--app-color-text-secondary);
   font-size: 26rpx;
   line-height: 1.7;
 }
 
 .security-notes {
-  margin-bottom: 44rpx;
+  margin-bottom: 30rpx;
   padding: 18rpx 28rpx;
   text-align: left;
 }
@@ -121,20 +148,42 @@ const authorize = async (): Promise<void> => {
   height: 44rpx;
   margin-right: 20rpx;
   border-radius: 50%;
-  background: #edf8f2;
-  color: #168e5d;
+  background: var(--app-color-primary-50);
+  color: var(--app-color-primary);
   font-size: 22rpx;
   font-weight: 700;
 }
 
 .security-note__text {
-  color: #3c4c44;
+  color: var(--app-color-text);
   font-size: 25rpx;
+}
+
+.agreement-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  margin: 0 6rpx 30rpx;
+  text-align: left;
+}
+
+.agreement-row__copy {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--app-color-text-secondary);
+  font-size: 22rpx;
+  line-height: 1.65;
+}
+
+.agreement-link {
+  color: var(--app-color-primary);
 }
 
 .login-help {
   margin-top: 24rpx;
-  color: #9aa59f;
+  color: var(--app-color-text-muted);
   font-size: 22rpx;
 }
 </style>

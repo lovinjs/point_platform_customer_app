@@ -2,7 +2,7 @@
   <view class="page-shell stores-page">
     <view class="hero-card">
       <view class="hero-card__mark">
-        <wd-icon name="store" size="48rpx" color="#ffffff" />
+        <wd-icon name="store" size="48rpx" :color="themeColors.white" />
       </view>
       <view class="hero-card__copy">
         <text class="hero-card__eyebrow">合作门店</text>
@@ -34,12 +34,12 @@
     </view>
 
     <view v-if="loading && stores.length === 0" class="state-panel">
-      <wd-loading color="#168e5d" size="48rpx" />
+      <wd-loading :color="themeColors.primary" size="48rpx" />
       <text>正在读取合作门店</text>
     </view>
 
     <view v-else-if="loadError && stores.length === 0" class="state-panel">
-      <wd-icon name="refresh" size="52rpx" color="#8a9991" />
+      <wd-icon name="refresh" size="52rpx" :color="themeColors.iconMuted" />
       <text>门店读取失败，请稍后重试</text>
       <wd-button type="primary" variant="soft" size="small" round @click="reload">
         重新加载
@@ -64,15 +64,15 @@
             <text class="store-card__name">{{ store.storeName }}</text>
             <text class="store-card__merchant">{{ store.merchantName }}</text>
           </view>
-          <wd-icon name="arrow-right" size="28rpx" color="#91a098" />
+          <wd-icon name="right" size="28rpx" :color="themeColors.iconMuted" />
         </view>
 
         <view class="store-card__detail">
-          <wd-icon name="location" size="27rpx" color="#759087" />
+          <wd-icon name="location" size="27rpx" :color="themeColors.textSecondary" />
           <text>{{ store.address }}</text>
         </view>
         <view class="store-card__detail">
-          <wd-icon name="phone" size="27rpx" color="#759087" />
+          <wd-icon name="phone" size="27rpx" :color="themeColors.textSecondary" />
           <text>{{ store.contactPhone }}</text>
         </view>
 
@@ -117,6 +117,7 @@ import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-ui'
 import { getErrorMessage } from '@/api/error'
 import { getCustomerStores } from '@/api/stores'
+import { themeColors } from '@/config/theme'
 import type { CustomerStore } from '@/types/store'
 
 type LoadMoreState = 'loading' | 'error' | 'finished' | undefined
@@ -199,7 +200,10 @@ const callStore = (phoneNumber: string): void => {
 const copyAddress = (address: string): void => {
   uni.setClipboardData({
     data: address,
+    // #ifdef H5
+    showToast: false,
     success: () => toast.success('门店地址已复制'),
+    // #endif
   })
 }
 
@@ -228,9 +232,9 @@ onReachBottom(loadMore)
   gap: 26rpx;
   padding: 34rpx 30rpx;
   border-radius: 32rpx;
-  background: linear-gradient(135deg, #0c6042 0%, #1aa66b 100%);
-  box-shadow: 0 20rpx 44rpx rgba(14, 117, 76, 0.2);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
 }
 
 .hero-card__mark {
@@ -240,9 +244,9 @@ onReachBottom(loadMore)
   justify-content: center;
   width: 92rpx;
   height: 92rpx;
-  border: 1rpx solid rgba(255, 255, 255, 0.2);
+  border: 1rpx solid var(--app-color-on-brand-border);
   border-radius: 28rpx;
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--app-color-on-brand-surface);
 }
 
 .hero-card__copy {
@@ -259,7 +263,7 @@ onReachBottom(loadMore)
 }
 
 .hero-card__eyebrow {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--app-color-on-brand-muted);
   font-size: 21rpx;
   letter-spacing: 3rpx;
 }
@@ -272,7 +276,7 @@ onReachBottom(loadMore)
 
 .hero-card__description {
   margin-top: 10rpx;
-  color: rgba(255, 255, 255, 0.74);
+  color: var(--app-color-on-brand-muted);
   font-size: 22rpx;
   line-height: 1.5;
 }
@@ -290,13 +294,13 @@ onReachBottom(loadMore)
 }
 
 .list-heading__title {
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 30rpx;
   font-weight: 650;
 }
 
 .list-heading__count {
-  color: #89968f;
+  color: var(--app-color-text-muted);
   font-size: 22rpx;
 }
 
@@ -306,7 +310,7 @@ onReachBottom(loadMore)
   align-items: center;
   gap: 22rpx;
   padding: 92rpx 20rpx;
-  color: #7c8b83;
+  color: var(--app-color-text-muted);
   font-size: 24rpx;
 }
 
@@ -322,7 +326,7 @@ onReachBottom(loadMore)
 
 .store-card--pressed {
   transform: scale(0.99);
-  background: #f9fcfa;
+  background: var(--app-color-surface-soft);
 }
 
 .store-card__heading {
@@ -339,8 +343,8 @@ onReachBottom(loadMore)
   width: 76rpx;
   height: 76rpx;
   border-radius: 23rpx;
-  background: linear-gradient(145deg, #ddf5e9, #eefaf4);
-  color: #108052;
+  background: var(--app-gradient-brand-soft);
+  color: var(--app-color-primary);
   font-size: 30rpx;
   font-weight: 700;
 }
@@ -352,7 +356,7 @@ onReachBottom(loadMore)
 
 .store-card__name {
   overflow: hidden;
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 29rpx;
   font-weight: 650;
   text-overflow: ellipsis;
@@ -362,7 +366,7 @@ onReachBottom(loadMore)
 .store-card__merchant {
   overflow: hidden;
   margin-top: 7rpx;
-  color: #8a9890;
+  color: var(--app-color-text-muted);
   font-size: 21rpx;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -373,7 +377,7 @@ onReachBottom(loadMore)
   align-items: flex-start;
   gap: 14rpx;
   margin-top: 19rpx;
-  color: #65766d;
+  color: var(--app-color-text-secondary);
   font-size: 23rpx;
   line-height: 1.55;
 }
@@ -387,6 +391,6 @@ onReachBottom(loadMore)
   gap: 16rpx;
   margin-top: 24rpx;
   padding-top: 22rpx;
-  border-top: 1rpx solid #edf1ef;
+  border-top: 1rpx solid var(--app-color-border);
 }
 </style>

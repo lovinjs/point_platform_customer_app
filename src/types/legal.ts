@@ -1,0 +1,17 @@
+export interface LegalSection {
+  readonly title: string
+  readonly paragraphs: readonly string[]
+  readonly items?: readonly string[]
+}
+
+export interface LegalDocument {
+  readonly title: string
+  readonly shortTitle: string
+  readonly icon: string
+  readonly version: string
+  readonly updatedDate: string
+  readonly effectiveDate: string
+  readonly statusLabel: string
+  readonly draftNotice: string
+  readonly sections: readonly LegalSection[]
+}

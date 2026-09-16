@@ -10,7 +10,12 @@
     </view>
 
     <view class="tabs-card surface-card">
-      <wd-tabs v-model="activeTab" color="#168e5d" inactive-color="#7b8a82" line-theme="text">
+      <wd-tabs
+        v-model="activeTab"
+        :color="themeColors.primary"
+        :inactive-color="themeColors.textSecondary"
+        line-theme="text"
+      >
         <wd-tab title="积分明细" name="ledger" />
         <wd-tab title="充值记录" name="recharge" />
         <wd-tab title="消费记录" name="consumption" />
@@ -18,12 +23,12 @@
     </view>
 
     <view v-if="loading && items.length === 0" class="state-panel">
-      <wd-loading color="#168e5d" size="48rpx" />
+      <wd-loading :color="themeColors.primary" size="48rpx" />
       <text>正在读取记录</text>
     </view>
 
     <view v-else-if="loadError && items.length === 0" class="state-panel">
-      <wd-icon name="refresh" size="52rpx" color="#8a9991" />
+      <wd-icon name="refresh" size="52rpx" :color="themeColors.iconMuted" />
       <text>记录读取失败，请稍后重试</text>
       <wd-button type="primary" variant="soft" size="small" round @click="reload">
         重新加载
@@ -77,6 +82,7 @@ import { computed, ref, watch } from 'vue'
 import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-ui'
 import { getErrorMessage } from '@/api/error'
+import { themeColors } from '@/config/theme'
 import {
   getCustomerConsumptionOrders,
   getCustomerPointBalance,
@@ -335,9 +341,9 @@ onReachBottom(() => {
   overflow: hidden;
   padding: 34rpx 32rpx;
   border-radius: 32rpx;
-  background: linear-gradient(135deg, #0b6042, #1ba46a);
-  box-shadow: 0 20rpx 44rpx rgba(14, 117, 76, 0.2);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
 }
 
 .balance-card__label,
@@ -346,7 +352,7 @@ onReachBottom(() => {
 }
 
 .balance-card__label {
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--app-color-on-brand-muted);
   font-size: 23rpx;
 }
 
@@ -368,7 +374,7 @@ onReachBottom(() => {
 }
 
 .balance-card__hint {
-  color: rgba(255, 255, 255, 0.64);
+  color: var(--app-color-on-brand-subtle);
   font-size: 21rpx;
 }
 
@@ -384,7 +390,7 @@ onReachBottom(() => {
   align-items: center;
   gap: 22rpx;
   padding: 100rpx 20rpx;
-  color: #7c8b83;
+  color: var(--app-color-text-muted);
   font-size: 24rpx;
 }
 
@@ -424,7 +430,7 @@ onReachBottom(() => {
 
 .transaction-card__title {
   overflow: hidden;
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 28rpx;
   font-weight: 650;
   text-overflow: ellipsis;
@@ -433,7 +439,7 @@ onReachBottom(() => {
 
 .transaction-card__category {
   margin-top: 8rpx;
-  color: #849189;
+  color: var(--app-color-text-muted);
   font-size: 21rpx;
 }
 
@@ -448,20 +454,20 @@ onReachBottom(() => {
 }
 
 .transaction-card__points.is-positive {
-  color: #168e5d;
+  color: var(--app-color-success);
 }
 
 .transaction-card__points.is-negative {
-  color: #d05e52;
+  color: var(--app-color-danger);
 }
 
 .transaction-card__points.is-neutral {
-  color: #53635b;
+  color: var(--app-color-text-secondary);
 }
 
 .transaction-card__money {
   margin-top: 6rpx;
-  color: #89958f;
+  color: var(--app-color-text-muted);
   font-size: 20rpx;
 }
 
@@ -469,8 +475,8 @@ onReachBottom(() => {
   align-items: center;
   margin-top: 22rpx;
   padding-top: 20rpx;
-  border-top: 1rpx solid #edf1ef;
-  color: #91a098;
+  border-top: 1rpx solid var(--app-color-border);
+  color: var(--app-color-text-muted);
   font-size: 20rpx;
 }
 
@@ -479,24 +485,24 @@ onReachBottom(() => {
 }
 
 .status-text.is-success {
-  color: #168e5d;
+  color: var(--app-color-success);
 }
 
 .status-text.is-warning {
-  color: #bb7a25;
+  color: var(--app-color-warning-text);
 }
 
 .status-text.is-danger {
-  color: #c6544b;
+  color: var(--app-color-danger);
 }
 
 .status-text.is-muted {
-  color: #86938c;
+  color: var(--app-color-text-muted);
 }
 
 .transaction-card__remark {
   margin-top: 16rpx;
-  color: #6f7e76;
+  color: var(--app-color-text-secondary);
   font-size: 21rpx;
   line-height: 1.55;
 }
@@ -504,7 +510,7 @@ onReachBottom(() => {
 .transaction-card__number {
   overflow: hidden;
   margin-top: 13rpx;
-  color: #a0aaa5;
+  color: var(--app-color-text-placeholder);
   font-size: 18rpx;
   text-overflow: ellipsis;
   white-space: nowrap;

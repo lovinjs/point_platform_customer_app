@@ -1,6 +1,6 @@
 <template>
   <view class="callback-page">
-    <wd-loading size="48px" color="#169b62" />
+    <wd-loading size="48px" :color="themeColors.primary" />
     <text class="callback-title">{{ title }}</text>
     <text class="callback-description">{{ description }}</text>
     <wd-button v-if="failed" type="primary" round @click="backToLogin">
@@ -13,6 +13,7 @@
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getErrorMessage } from '@/api/error'
+import { themeColors } from '@/config/theme'
 import {
   completeCustomerLogin,
   readH5LoginTicketFromBrowserAddress,
@@ -57,7 +58,7 @@ onLoad((query) => {
   align-items: center;
   justify-content: center;
   padding: 48rpx;
-  background: #f4f7f5;
+  background: var(--app-color-background);
   text-align: center;
 }
 
@@ -68,7 +69,7 @@ onLoad((query) => {
 
 .callback-title {
   margin-top: 30rpx;
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 34rpx;
   font-weight: 600;
 }
@@ -76,7 +77,7 @@ onLoad((query) => {
 .callback-description {
   max-width: 560rpx;
   margin: 16rpx 0 36rpx;
-  color: #819087;
+  color: var(--app-color-text-muted);
   font-size: 24rpx;
   line-height: 1.6;
 }

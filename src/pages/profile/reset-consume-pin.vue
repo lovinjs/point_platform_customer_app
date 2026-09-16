@@ -1,7 +1,7 @@
 <template>
   <view class="page-shell reset-pin-page">
     <view class="security-mark">
-      <wd-icon name="safe" size="54rpx" color="#ffffff" />
+      <wd-icon name="safe" size="54rpx" :color="themeColors.white" />
     </view>
     <text class="page-title">重置消费密码</text>
     <text class="page-description">
@@ -78,7 +78,7 @@
     </view>
 
     <view class="security-hint">
-      <wd-icon name="info-circle" size="30rpx" color="#168e5d" />
+      <wd-icon name="info-circle" size="30rpx" :color="themeColors.primary" />
       <text>重置成功后，当前所有待确认消费订单都会自动取消，需要消费时请让门店重新发起。</text>
     </view>
 
@@ -96,6 +96,7 @@ import {
   resetCustomerConsumePin,
 } from '@/api/customer'
 import { getErrorMessage } from '@/api/error'
+import { themeColors } from '@/config/theme'
 import { useAuthStore } from '@/stores/auth'
 
 const PIN_PATTERN = /^\d{6}$/
@@ -256,8 +257,8 @@ onBeforeUnmount(clearCountdown)
   height: 108rpx;
   margin: 0 auto 30rpx;
   border-radius: 34rpx;
-  background: linear-gradient(135deg, #0c6545, #26aa70);
-  box-shadow: 0 20rpx 44rpx rgba(16, 135, 85, 0.22);
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
 }
 
 .page-title,
@@ -267,7 +268,7 @@ onBeforeUnmount(clearCountdown)
 }
 
 .page-title {
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 42rpx;
   font-weight: 700;
   text-align: center;
@@ -275,7 +276,7 @@ onBeforeUnmount(clearCountdown)
 
 .page-description {
   margin: 18rpx auto 42rpx;
-  color: #75847c;
+  color: var(--app-color-text-secondary);
   font-size: 25rpx;
   line-height: 1.7;
   text-align: center;
@@ -291,16 +292,16 @@ onBeforeUnmount(clearCountdown)
 
 .field-label {
   margin: 0 4rpx 12rpx;
-  color: #35463e;
+  color: var(--app-color-text);
   font-size: 25rpx;
   font-weight: 600;
 }
 
 .field-control {
   overflow: hidden;
-  border: 1rpx solid #dfe9e4;
+  border: 1rpx solid var(--app-color-border-strong);
   border-radius: 20rpx;
-  background: #f8fbf9;
+  background: var(--app-color-surface-soft);
 }
 
 .code-row {
@@ -319,7 +320,7 @@ onBeforeUnmount(clearCountdown)
   align-items: flex-start;
   gap: 12rpx;
   margin: 30rpx 12rpx 0;
-  color: #718078;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.6;
 }

@@ -1,9 +1,18 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
+			"path": "pages/stores/index",
+			"style": {
+				"navigationBarTitleText": "合作门店",
+				"enablePullDownRefresh": true,
+				"backgroundTextStyle": "dark",
+				"onReachBottomDistance": 80
+			}
+		},
+		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "平台积分"
+				"navigationBarTitleText": "我的"
 			}
 		},
 		{
@@ -55,26 +64,55 @@
 			}
 		},
 		{
-			"path": "pages/stores/index",
-			"style": {
-				"navigationBarTitleText": "合作门店",
-				"enablePullDownRefresh": true,
-				"backgroundTextStyle": "dark",
-				"onReachBottomDistance": 80
-			}
-		},
-		{
 			"path": "pages/stores/detail",
 			"style": {
 				"navigationBarTitleText": "门店详情"
 			}
+		},
+		{
+			"path": "pages/help/index",
+			"style": {
+				"navigationBarTitleText": "帮助中心"
+			}
+		},
+		{
+			"path": "pages/legal/user-agreement",
+			"style": {
+				"navigationBarTitleText": "用户协议"
+			}
+		},
+		{
+			"path": "pages/legal/privacy-policy",
+			"style": {
+				"navigationBarTitleText": "隐私政策"
+			}
 		}
 	],
+	"tabBar": {
+		"color": "#7C879B",
+		"selectedColor": "#246BFD",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "white",
+		"list": [
+			{
+				"pagePath": "pages/stores/index",
+				"text": "门店",
+				"iconPath": "static/tabbar/store.png",
+				"selectedIconPath": "static/tabbar/store-active.png"
+			},
+			{
+				"pagePath": "pages/index/index",
+				"text": "我的",
+				"iconPath": "static/tabbar/user.png",
+				"selectedIconPath": "static/tabbar/user-active.png"
+			}
+		]
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "平台积分",
 		"navigationBarBackgroundColor": "#FFFFFF",
-		"backgroundColor": "#F4F7F5",
+		"backgroundColor": "#F4F7FA",
 		"backgroundTextStyle": "dark",
 		"rpxCalcMaxDeviceWidth": 600,
 		"rpxCalcBaseDeviceWidth": 375,

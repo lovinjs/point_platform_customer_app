@@ -1,13 +1,13 @@
 <template>
   <view class="page-shell consume-pin-page">
     <view class="security-mark">
-      <wd-icon name="safe" size="54rpx" color="#ffffff" />
+      <wd-icon name="safe" size="54rpx" :color="themeColors.white" />
     </view>
     <text class="page-title">{{ pageTitle }}</text>
     <text class="page-description">{{ pageDescription }}</text>
 
     <view v-if="locked" class="lock-notice surface-card">
-      <wd-icon name="info-circle" size="34rpx" color="#b26b10" />
+      <wd-icon name="info-circle" size="34rpx" :color="themeColors.warning" />
       <view class="lock-notice__copy">
         <text class="lock-notice__title">消费密码已临时锁定</text>
         <text class="lock-notice__description">{{ lockedUntilText }}</text>
@@ -82,7 +82,7 @@
     </view>
 
     <view class="security-hint">
-      <wd-icon name="safe" size="30rpx" color="#168e5d" />
+      <wd-icon name="safe" size="30rpx" :color="themeColors.primary" />
       <text>请勿使用连续或重复数字；门店工作人员不会向你索要消费密码，请只在本人页面输入。</text>
     </view>
 
@@ -100,6 +100,7 @@ import {
   setCustomerConsumePin,
 } from '@/api/customer'
 import { ApiError, getErrorMessage } from '@/api/error'
+import { themeColors } from '@/config/theme'
 import { useAuthStore } from '@/stores/auth'
 import type { ConsumePinStatus } from '@/types/auth'
 
@@ -272,8 +273,8 @@ onShow(() => {
   height: 108rpx;
   margin: 0 auto 30rpx;
   border-radius: 34rpx;
-  background: linear-gradient(135deg, #0c6545, #26aa70);
-  box-shadow: 0 20rpx 44rpx rgba(16, 135, 85, 0.22);
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
 }
 
 .page-title,
@@ -286,7 +287,7 @@ onShow(() => {
 }
 
 .page-title {
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 42rpx;
   font-weight: 700;
   text-align: center;
@@ -294,7 +295,7 @@ onShow(() => {
 
 .page-description {
   margin: 18rpx auto 38rpx;
-  color: #75847c;
+  color: var(--app-color-text-secondary);
   font-size: 25rpx;
   line-height: 1.7;
   text-align: center;
@@ -306,8 +307,8 @@ onShow(() => {
   gap: 16rpx;
   margin-bottom: 24rpx;
   padding: 24rpx;
-  border-color: #f2dfb8;
-  background: #fffaf0;
+  border-color: var(--app-color-warning-border);
+  background: var(--app-color-warning-soft);
 }
 
 .lock-notice__copy {
@@ -315,14 +316,14 @@ onShow(() => {
 }
 
 .lock-notice__title {
-  color: #6e4c1c;
+  color: var(--app-color-warning-text);
   font-size: 25rpx;
   font-weight: 600;
 }
 
 .lock-notice__description {
   margin-top: 6rpx;
-  color: #947546;
+  color: var(--app-color-warning-text);
   font-size: 22rpx;
 }
 
@@ -336,21 +337,21 @@ onShow(() => {
 
 .field-label {
   margin: 0 4rpx 12rpx;
-  color: #35463e;
+  color: var(--app-color-text);
   font-size: 25rpx;
   font-weight: 600;
 }
 
 .field-control {
   overflow: hidden;
-  border: 1rpx solid #dfe9e4;
+  border: 1rpx solid var(--app-color-border-strong);
   border-radius: 20rpx;
-  background: #f8fbf9;
+  background: var(--app-color-surface-soft);
 }
 
 .updated-time {
   margin-top: 22rpx;
-  color: #8b9891;
+  color: var(--app-color-text-muted);
   font-size: 21rpx;
   text-align: center;
 }
@@ -358,7 +359,7 @@ onShow(() => {
 .forgot-link {
   display: block;
   margin-top: 24rpx;
-  color: #168e5d;
+  color: var(--app-color-primary);
   font-size: 23rpx;
   text-align: center;
 }
@@ -368,7 +369,7 @@ onShow(() => {
   align-items: flex-start;
   gap: 12rpx;
   margin: 30rpx 12rpx 0;
-  color: #718078;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.6;
 }

@@ -7,8 +7,8 @@
             :src="avatarSource"
             :text="avatarFallbackText"
             size="88rpx"
-            bg-color="#dff4e9"
-            color="#0f7e50"
+            :bg-color="themeColors.primarySoft"
+            :color="themeColors.primary"
             @error="handleAvatarError"
           />
         </view>
@@ -31,37 +31,6 @@
         <text>1积分 = 1元</text>
         <text>{{ sessionHint }}</text>
       </view>
-    </view>
-
-    <text class="section-title">核心能力</text>
-    <view class="surface-card capability-list">
-      <view class="capability-item">
-        <view class="capability-index">01</view>
-        <view class="capability-copy">
-          <text class="capability-title">全平台积分账户</text>
-          <text class="capability-description">任意合作门店充值，积分统一管理</text>
-        </view>
-      </view>
-      <view class="capability-divider" />
-      <view class="capability-item">
-        <view class="capability-index">02</view>
-        <view class="capability-copy">
-          <text class="capability-title">消费由本人确认</text>
-          <text class="capability-description">待消费订单须由消费者输入密码确认</text>
-        </view>
-      </view>
-    </view>
-
-    <view class="stores-card surface-card" @click="goToStores">
-      <view class="stores-card__icon">
-        <wd-icon name="store" size="40rpx" color="#168e5d" />
-      </view>
-      <view class="stores-card__copy">
-        <text class="stores-card__eyebrow">无需登录即可查看</text>
-        <text class="stores-card__title">合作门店</text>
-        <text class="stores-card__description">查找可充值、可使用积分的线下门店</text>
-      </view>
-      <wd-icon name="arrow-right" size="30rpx" color="#91a098" />
     </view>
 
     <view v-if="!auth.isAuthenticated.value" class="login-panel surface-card">
@@ -99,7 +68,7 @@
 
     <view v-else class="security-card surface-card">
       <view class="security-card__icon">
-        <wd-icon name="safe" size="38rpx" color="#168e5d" />
+        <wd-icon name="safe" size="38rpx" :color="themeColors.primary" />
       </view>
       <view class="security-card__copy">
         <text class="security-card__title">消费密码</text>
@@ -140,13 +109,40 @@
       @click="goToTransactions"
     >
       <view class="transactions-card__icon">
-        <wd-icon name="list" size="38rpx" color="#168e5d" />
+        <wd-icon name="list" size="38rpx" :color="themeColors.primary" />
       </view>
       <view class="transactions-card__copy">
         <text class="transactions-card__title">账单记录</text>
         <text class="transactions-card__description">查看积分明细、充值和消费订单</text>
       </view>
-      <wd-icon name="arrow-right" size="30rpx" color="#91a098" />
+      <wd-icon name="right" size="30rpx" :color="themeColors.iconMuted" />
+    </view>
+
+    <text class="section-title support-section-title">帮助与服务</text>
+    <view class="support-card surface-card">
+      <view class="support-row" @click="goToHelpCenter">
+        <view class="support-row__icon">
+          <wd-icon name="question-circle" size="35rpx" :color="themeColors.primary" />
+        </view>
+        <text class="support-row__title">帮助中心</text>
+        <wd-icon name="right" size="28rpx" :color="themeColors.iconMuted" />
+      </view>
+      <view class="support-row__divider" />
+      <view class="support-row" @click="goToUserAgreement">
+        <view class="support-row__icon">
+          <wd-icon name="file" size="35rpx" :color="themeColors.primary" />
+        </view>
+        <text class="support-row__title">用户协议</text>
+        <wd-icon name="right" size="28rpx" :color="themeColors.iconMuted" />
+      </view>
+      <view class="support-row__divider" />
+      <view class="support-row" @click="goToPrivacyPolicy">
+        <view class="support-row__icon">
+          <wd-icon name="safe" size="35rpx" :color="themeColors.primary" />
+        </view>
+        <text class="support-row__title">隐私政策</text>
+        <wd-icon name="right" size="28rpx" :color="themeColors.iconMuted" />
+      </view>
     </view>
 
     <wd-toast />
@@ -158,6 +154,7 @@ import { computed, ref, watch } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { getCustomerProfile } from '@/api/customer'
 import { appConfig } from '@/config/app'
+import { themeColors } from '@/config/theme'
 import { useAuthStore } from '@/stores/auth'
 
 const auth = useAuthStore()
@@ -210,8 +207,16 @@ const goToTransactions = (): void => {
   uni.navigateTo({ url: '/pages/transactions/index' })
 }
 
-const goToStores = (): void => {
-  uni.navigateTo({ url: '/pages/stores/index' })
+const goToHelpCenter = (): void => {
+  uni.navigateTo({ url: '/pages/help/index' })
+}
+
+const goToUserAgreement = (): void => {
+  uni.navigateTo({ url: '/pages/legal/user-agreement' })
+}
+
+const goToPrivacyPolicy = (): void => {
+  uni.navigateTo({ url: '/pages/legal/privacy-policy' })
 }
 
 const handleAvatarError = (): void => {
@@ -272,10 +277,10 @@ watch(
   width: 96rpx;
   height: 96rpx;
   margin-right: 20rpx;
-  border: 4rpx solid #ffffff;
+  border: 4rpx solid var(--app-color-surface);
   border-radius: 50%;
-  background: #dff4e9;
-  box-shadow: 0 10rpx 28rpx rgba(17, 77, 55, 0.14);
+  background: var(--app-color-primary-100);
+  box-shadow: var(--app-shadow-avatar);
 }
 
 .account-summary__copy {
@@ -287,8 +292,6 @@ watch(
 .balance-label,
 .balance-value,
 .balance-unit,
-.capability-title,
-.capability-description,
 .login-panel__title,
 .login-panel__description {
   display: block;
@@ -296,14 +299,14 @@ watch(
 
 .eyebrow {
   margin-bottom: 8rpx;
-  color: #73837b;
+  color: var(--app-color-text-secondary);
   font-size: 24rpx;
   letter-spacing: 2rpx;
 }
 
 .welcome-title {
   overflow: hidden;
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 40rpx;
   font-weight: 700;
   text-overflow: ellipsis;
@@ -315,9 +318,9 @@ watch(
   overflow: hidden;
   padding: 44rpx 40rpx 34rpx;
   border-radius: 36rpx;
-  background: linear-gradient(135deg, #0c5f42 0%, #169b62 58%, #46b783 100%);
-  box-shadow: 0 24rpx 52rpx rgba(14, 117, 76, 0.24);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
 }
 
 .balance-card__glow {
@@ -327,12 +330,12 @@ watch(
   width: 300rpx;
   height: 300rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--app-color-on-brand-surface);
 }
 
 .balance-label {
   position: relative;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--app-color-on-brand-strong);
   font-size: 26rpx;
 }
 
@@ -352,7 +355,7 @@ watch(
 
 .balance-unit {
   margin-left: 14rpx;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--app-color-on-brand-strong);
   font-size: 26rpx;
 }
 
@@ -361,56 +364,9 @@ watch(
   display: flex;
   justify-content: space-between;
   padding-top: 24rpx;
-  border-top: 1rpx solid rgba(255, 255, 255, 0.22);
-  color: rgba(255, 255, 255, 0.75);
+  border-top: 1rpx solid var(--app-color-on-brand-border);
+  color: var(--app-color-on-brand-muted);
   font-size: 22rpx;
-}
-
-.capability-list {
-  padding: 8rpx 28rpx;
-}
-
-.capability-item {
-  display: flex;
-  align-items: center;
-  padding: 28rpx 0;
-}
-
-.capability-index {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 72rpx;
-  height: 72rpx;
-  margin-right: 24rpx;
-  border-radius: 22rpx;
-  background: #eef8f3;
-  color: #148557;
-  font-size: 22rpx;
-  font-weight: 700;
-}
-
-.capability-copy {
-  flex: 1;
-}
-
-.capability-title {
-  margin-bottom: 8rpx;
-  color: #24382f;
-  font-size: 28rpx;
-  font-weight: 600;
-}
-
-.capability-description {
-  color: #829087;
-  font-size: 23rpx;
-  line-height: 1.5;
-}
-
-.capability-divider {
-  height: 1rpx;
-  margin-left: 96rpx;
-  background: #edf1ef;
 }
 
 .login-panel {
@@ -419,14 +375,14 @@ watch(
 }
 
 .login-panel__title {
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 30rpx;
   font-weight: 600;
 }
 
 .login-panel__description {
   margin: 12rpx 0 28rpx;
-  color: #829087;
+  color: var(--app-color-text-muted);
   font-size: 24rpx;
   line-height: 1.6;
 }
@@ -436,8 +392,8 @@ watch(
   align-items: flex-start;
   margin-top: 28rpx;
   padding: 28rpx;
-  border: 1rpx solid #f2dfb8;
-  background: #fffaf0;
+  border: 1rpx solid var(--app-color-warning-border);
+  background: var(--app-color-warning-soft);
 }
 
 .account-notice__badge {
@@ -445,8 +401,8 @@ watch(
   margin-right: 20rpx;
   padding: 7rpx 14rpx;
   border-radius: 14rpx;
-  background: #fff0cf;
-  color: #a86913;
+  background: var(--app-color-warning-badge);
+  color: var(--app-color-warning-text);
   font-size: 21rpx;
   font-weight: 600;
 }
@@ -476,7 +432,7 @@ watch(
   width: 72rpx;
   height: 72rpx;
   border-radius: 22rpx;
-  background: #eef8f3;
+  background: var(--app-color-primary-50);
 }
 
 .security-card__copy {
@@ -505,7 +461,7 @@ watch(
   width: 72rpx;
   height: 72rpx;
   border-radius: 22rpx;
-  background: #eef8f3;
+  background: var(--app-color-primary-50);
 }
 
 .transactions-card__copy {
@@ -518,67 +474,55 @@ watch(
   display: block;
 }
 
-.stores-card {
-  display: flex;
-  align-items: center;
-  gap: 20rpx;
-  margin-top: 28rpx;
-  padding: 28rpx 24rpx;
-  background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
-}
-
-.stores-card__icon {
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 76rpx;
-  height: 76rpx;
-  border-radius: 23rpx;
-  background: #e8f7f0;
-}
-
-.stores-card__copy {
-  flex: 1;
-  min-width: 0;
-}
-
-.stores-card__eyebrow,
-.stores-card__title,
-.stores-card__description {
-  display: block;
-}
-
-.stores-card__eyebrow {
-  color: #168e5d;
-  font-size: 19rpx;
-  letter-spacing: 1rpx;
-}
-
-.stores-card__title {
-  margin-top: 5rpx;
-  color: #24382f;
-  font-size: 29rpx;
-  font-weight: 650;
-}
-
-.stores-card__description {
-  margin-top: 7rpx;
-  color: #7b8a82;
-  font-size: 22rpx;
-  line-height: 1.5;
-}
-
 .transactions-card__title {
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 27rpx;
   font-weight: 600;
 }
 
 .transactions-card__description {
   margin-top: 7rpx;
-  color: #7b8a82;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
+}
+
+.support-section-title {
+  margin-top: 34rpx;
+}
+
+.support-card {
+  padding: 4rpx 24rpx;
+}
+
+.support-row {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 22rpx 0;
+}
+
+.support-row__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 20rpx;
+  background: var(--app-color-primary-50);
+}
+
+.support-row__title {
+  flex: 1;
+  color: var(--app-color-text);
+  font-size: 25rpx;
+  font-weight: 600;
+}
+
+.support-row__divider {
+  height: 1rpx;
+  margin-left: 82rpx;
+  background: var(--app-color-border);
 }
 
 .consumption-card {
@@ -587,7 +531,7 @@ watch(
   gap: 24rpx;
   margin-top: 28rpx;
   padding: 30rpx 26rpx;
-  background: linear-gradient(135deg, #ffffff 0%, #f0faf5 100%);
+  background: var(--app-gradient-brand-soft);
 }
 
 .consumption-card__copy {
@@ -602,7 +546,7 @@ watch(
 }
 
 .consumption-card__eyebrow {
-  color: #168e5d;
+  color: var(--app-color-primary);
   font-size: 20rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
@@ -610,40 +554,40 @@ watch(
 
 .consumption-card__title {
   margin-top: 7rpx;
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 29rpx;
   font-weight: 700;
 }
 
 .consumption-card__description {
   margin-top: 8rpx;
-  color: #7b8a82;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.55;
 }
 
 .security-card__title {
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 27rpx;
   font-weight: 600;
 }
 
 .security-card__description {
   margin-top: 7rpx;
-  color: #7b8a82;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.5;
 }
 
 .account-notice__title {
-  color: #5e451f;
+  color: var(--app-color-warning-text);
   font-size: 27rpx;
   font-weight: 600;
 }
 
 .account-notice__description {
   margin-top: 8rpx;
-  color: #8d744d;
+  color: var(--app-color-warning-text);
   font-size: 23rpx;
   line-height: 1.6;
 }

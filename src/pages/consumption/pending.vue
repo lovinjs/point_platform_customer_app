@@ -2,7 +2,7 @@
   <view class="page-shell consumption-page">
     <view v-if="lastResult" class="success-panel">
       <view class="success-mark">
-        <wd-icon name="check" size="64rpx" color="#ffffff" />
+        <wd-icon name="check" size="64rpx" :color="themeColors.white" />
       </view>
       <text class="success-title">消费成功</text>
       <text class="success-description">积分已经扣减，本次消费已归属到对应门店。</text>
@@ -102,8 +102,8 @@
 
     <view v-else class="waiting-panel">
       <view class="waiting-mark">
-        <wd-loading v-if="loading" color="#168e5d" size="52rpx" />
-        <wd-icon v-else name="time-line" size="54rpx" color="#168e5d" />
+        <wd-loading v-if="loading" :color="themeColors.primary" size="52rpx" />
+        <wd-icon v-else name="time-line" size="54rpx" :color="themeColors.primary" />
       </view>
       <text class="waiting-title">{{ loading ? '正在查询订单' : '等待门店发起消费' }}</text>
       <text class="waiting-description">
@@ -121,7 +121,7 @@
     </view>
 
     <view v-if="!lastResult" class="security-hint">
-      <wd-icon name="safe" size="30rpx" color="#168e5d" />
+      <wd-icon name="safe" size="30rpx" :color="themeColors.primary" />
       <text>确认前请核对门店和金额。消费密码只应在自己的手机上输入，不要口头告知店员。</text>
     </view>
 
@@ -135,6 +135,7 @@ import { onHide, onPullDownRefresh, onShow, onUnload } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-ui'
 import { ApiError, getErrorMessage } from '@/api/error'
 import { confirmConsumption, getPendingConsumption } from '@/api/consumption'
+import { themeColors } from '@/config/theme'
 import { useAuthStore } from '@/stores/auth'
 import type {
   ConsumptionConfirmationResult,
@@ -151,6 +152,7 @@ const pendingOrder = ref<CustomerPendingConsumption | null>(null)
 const lastResult = ref<ConsumptionConfirmationResult | null>(null)
 const consumePin = ref('')
 const loading = ref(false)
+const refreshing = ref(false)
 const confirming = ref(false)
 const nowTimestamp = ref(Date.now())
 let pollTimer: ReturnType<typeof setInterval> | null = null
@@ -194,10 +196,13 @@ const stopTimers = (): void => {
 }
 
 const refreshPending = async (silent: boolean): Promise<void> => {
-  if (loading.value || confirming.value || lastResult.value) {
+  if (refreshing.value || confirming.value || lastResult.value) {
     return
   }
-  loading.value = true
+  refreshing.value = true
+  if (!silent) {
+    loading.value = true
+  }
   try {
     const nextOrder = await getPendingConsumption()
     if (nextOrder?.orderNo !== pendingOrder.value?.orderNo) {
@@ -210,7 +215,10 @@ const refreshPending = async (silent: boolean): Promise<void> => {
       toast.warning(getErrorMessage(error))
     }
   } finally {
-    loading.value = false
+    refreshing.value = false
+    if (!silent) {
+      loading.value = false
+    }
   }
 }
 
@@ -335,14 +343,14 @@ onUnload(stopTimers)
 
 .eyebrow {
   margin-bottom: 7rpx;
-  color: #168e5d;
+  color: var(--app-color-primary);
   font-size: 22rpx;
   font-weight: 600;
   letter-spacing: 2rpx;
 }
 
 .page-title {
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 42rpx;
   font-weight: 700;
 }
@@ -350,15 +358,15 @@ onUnload(stopTimers)
 .amount-card {
   padding: 42rpx 32rpx 36rpx;
   border-radius: 34rpx;
-  background: linear-gradient(135deg, #0b6042, #1ba46a);
-  box-shadow: 0 22rpx 48rpx rgba(14, 117, 76, 0.22);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
   text-align: center;
 }
 
 .amount-card__store {
   overflow: hidden;
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--app-color-on-brand-strong);
   font-size: 27rpx;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -385,7 +393,7 @@ onUnload(stopTimers)
 }
 
 .amount-card__points {
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--app-color-on-brand-muted);
   font-size: 23rpx;
 }
 
@@ -403,8 +411,8 @@ onUnload(stopTimers)
   justify-content: space-between;
   gap: 24rpx;
   padding: 24rpx 0;
-  border-bottom: 1rpx solid #edf1ef;
-  color: #7b8a82;
+  border-bottom: 1rpx solid var(--app-color-border);
+  color: var(--app-color-text-secondary);
   font-size: 23rpx;
 }
 
@@ -416,7 +424,7 @@ onUnload(stopTimers)
 .detail-value,
 .receipt-value {
   flex: 1;
-  color: #2f4138;
+  color: var(--app-color-text);
   font-weight: 500;
   text-align: right;
   word-break: break-all;
@@ -424,7 +432,7 @@ onUnload(stopTimers)
 
 .detail-value--countdown,
 .receipt-value--accent {
-  color: #168e5d;
+  color: var(--app-color-primary);
   font-weight: 700;
 }
 
@@ -439,21 +447,21 @@ onUnload(stopTimers)
 
 .field-label {
   margin: 0 4rpx 12rpx;
-  color: #35463e;
+  color: var(--app-color-text);
   font-size: 25rpx;
   font-weight: 600;
 }
 
 .pin-control {
   overflow: hidden;
-  border: 1rpx solid #dfe9e4;
+  border: 1rpx solid var(--app-color-border-strong);
   border-radius: 20rpx;
-  background: #f8fbf9;
+  background: var(--app-color-surface-soft);
 }
 
 .confirm-hint {
   margin: 18rpx 4rpx 28rpx;
-  color: #947546;
+  color: var(--app-color-warning-text);
   font-size: 21rpx;
   line-height: 1.6;
 }
@@ -473,18 +481,18 @@ onUnload(stopTimers)
   height: 112rpx;
   margin: 0 auto 30rpx;
   border-radius: 36rpx;
-  background: #e8f7ef;
+  background: var(--app-color-primary-50);
 }
 
 .success-mark {
   border-radius: 50%;
-  background: linear-gradient(135deg, #0c6545, #26aa70);
-  box-shadow: 0 20rpx 44rpx rgba(16, 135, 85, 0.22);
+  background: var(--app-gradient-success);
+  box-shadow: var(--app-shadow-success);
 }
 
 .waiting-title,
 .success-title {
-  color: #18231e;
+  color: var(--app-color-text-strong);
   font-size: 38rpx;
   font-weight: 700;
 }
@@ -493,7 +501,7 @@ onUnload(stopTimers)
 .success-description {
   max-width: 620rpx;
   margin: 18rpx auto 34rpx;
-  color: #75847c;
+  color: var(--app-color-text-secondary);
   font-size: 24rpx;
   line-height: 1.7;
 }
@@ -508,7 +516,7 @@ onUnload(stopTimers)
   align-items: flex-start;
   gap: 12rpx;
   margin: 30rpx 12rpx 0;
-  color: #718078;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.6;
 }

@@ -1,12 +1,12 @@
 <template>
   <view class="page-shell store-detail-page">
     <view v-if="loading" class="state-panel">
-      <wd-loading color="#168e5d" size="48rpx" />
+      <wd-loading :color="themeColors.primary" size="48rpx" />
       <text>正在读取门店详情</text>
     </view>
 
     <view v-else-if="loadError || !store" class="state-panel">
-      <wd-icon name="refresh" size="52rpx" color="#8a9991" />
+      <wd-icon name="refresh" size="52rpx" :color="themeColors.iconMuted" />
       <text>{{ loadError || '门店信息不存在' }}</text>
       <wd-button
         v-if="storeId"
@@ -32,7 +32,7 @@
       <view class="surface-card detail-card">
         <view class="detail-row">
           <view class="detail-row__icon">
-            <wd-icon name="location" size="34rpx" color="#168e5d" />
+            <wd-icon name="location" size="34rpx" :color="themeColors.primary" />
           </view>
           <view class="detail-row__copy">
             <text class="detail-row__label">门店地址</text>
@@ -47,7 +47,7 @@
 
         <view class="detail-row">
           <view class="detail-row__icon">
-            <wd-icon name="phone" size="34rpx" color="#168e5d" />
+            <wd-icon name="phone" size="34rpx" :color="themeColors.primary" />
           </view>
           <view class="detail-row__copy">
             <text class="detail-row__label">联系电话</text>
@@ -61,7 +61,7 @@
 
       <view class="usage-card surface-card">
         <view class="usage-card__icon">
-          <wd-icon name="safe" size="40rpx" color="#168e5d" />
+          <wd-icon name="safe" size="40rpx" :color="themeColors.primary" />
         </view>
         <view class="usage-card__copy">
           <text class="usage-card__title">平台积分可在本店使用</text>
@@ -78,19 +78,26 @@
       </view>
     </template>
 
+    <!-- #ifdef H5 -->
     <wd-toast />
+    <!-- #endif -->
   </view>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
+// #ifdef H5
 import { useToast } from '@/uni_modules/wot-ui'
+// #endif
 import { getErrorMessage } from '@/api/error'
 import { getCustomerStore } from '@/api/stores'
+import { themeColors } from '@/config/theme'
 import type { CustomerStore } from '@/types/store'
 
+// #ifdef H5
 const toast = useToast()
+// #endif
 const storeId = ref<number>()
 const store = ref<CustomerStore>()
 const loading = ref(false)
@@ -124,7 +131,10 @@ const copyAddress = (): void => {
   if (!store.value) return
   uni.setClipboardData({
     data: store.value.address,
+    // #ifdef H5
+    showToast: false,
     success: () => toast.success('门店地址已复制'),
+    // #endif
   })
 }
 
@@ -150,7 +160,7 @@ onLoad((query) => {
   align-items: center;
   gap: 22rpx;
   padding: 130rpx 20rpx;
-  color: #7c8b83;
+  color: var(--app-color-text-muted);
   font-size: 24rpx;
 }
 
@@ -159,9 +169,9 @@ onLoad((query) => {
   overflow: hidden;
   padding: 42rpx 34rpx 38rpx;
   border-radius: 34rpx;
-  background: linear-gradient(135deg, #0b6042, #1ba46a);
-  box-shadow: 0 20rpx 44rpx rgba(14, 117, 76, 0.2);
-  color: #ffffff;
+  background: var(--app-gradient-brand);
+  box-shadow: var(--app-shadow-brand);
+  color: var(--app-color-on-brand);
 }
 
 .identity-card::after {
@@ -171,7 +181,7 @@ onLoad((query) => {
   width: 260rpx;
   height: 260rpx;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--app-color-on-brand-surface);
   content: '';
 }
 
@@ -184,9 +194,9 @@ onLoad((query) => {
   width: 88rpx;
   height: 88rpx;
   margin-bottom: 28rpx;
-  border: 1rpx solid rgba(255, 255, 255, 0.26);
+  border: 1rpx solid var(--app-color-on-brand-border);
   border-radius: 27rpx;
-  background: rgba(255, 255, 255, 0.14);
+  background: var(--app-color-on-brand-surface);
   font-size: 34rpx;
   font-weight: 700;
 }
@@ -204,7 +214,7 @@ onLoad((query) => {
 .identity-card__eyebrow {
   position: relative;
   z-index: 1;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--app-color-on-brand-muted);
   font-size: 21rpx;
   letter-spacing: 2rpx;
 }
@@ -221,7 +231,7 @@ onLoad((query) => {
   position: relative;
   z-index: 1;
   margin-top: 10rpx;
-  color: rgba(255, 255, 255, 0.76);
+  color: var(--app-color-on-brand-muted);
   font-size: 23rpx;
 }
 
@@ -244,7 +254,7 @@ onLoad((query) => {
   width: 68rpx;
   height: 68rpx;
   border-radius: 21rpx;
-  background: #eef8f3;
+  background: var(--app-color-primary-50);
 }
 
 .detail-row__copy {
@@ -253,13 +263,13 @@ onLoad((query) => {
 }
 
 .detail-row__label {
-  color: #8a9890;
+  color: var(--app-color-text-muted);
   font-size: 21rpx;
 }
 
 .detail-row__value {
   margin-top: 7rpx;
-  color: #31463c;
+  color: var(--app-color-text);
   font-size: 25rpx;
   line-height: 1.55;
 }
@@ -267,7 +277,7 @@ onLoad((query) => {
 .detail-divider {
   height: 1rpx;
   margin-left: 86rpx;
-  background: #edf1ef;
+  background: var(--app-color-border);
 }
 
 .usage-card {
@@ -286,7 +296,7 @@ onLoad((query) => {
   width: 72rpx;
   height: 72rpx;
   border-radius: 22rpx;
-  background: #eef8f3;
+  background: var(--app-color-primary-50);
 }
 
 .usage-card__copy {
@@ -294,14 +304,14 @@ onLoad((query) => {
 }
 
 .usage-card__title {
-  color: #24382f;
+  color: var(--app-color-text-strong);
   font-size: 27rpx;
   font-weight: 650;
 }
 
 .usage-card__description {
   margin-top: 9rpx;
-  color: #74847b;
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.65;
 }
