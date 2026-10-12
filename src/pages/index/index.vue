@@ -1,5 +1,6 @@
 <template>
   <view class="page-shell home-page">
+    <release-notice />
     <view class="welcome-row">
       <view class="account-summary">
         <view class="avatar-shell">
@@ -145,6 +146,7 @@
       </view>
     </view>
 
+    <site-footer />
     <wd-toast />
   </view>
 </template>
@@ -153,6 +155,8 @@
 import { computed, ref, watch } from 'vue'
 import { onShow } from '@dcloudio/uni-app'
 import { getCustomerProfile } from '@/api/customer'
+import ReleaseNotice from '@/components/release-notice.vue'
+import SiteFooter from '@/components/site-footer.vue'
 import { appConfig } from '@/config/app'
 import { themeColors } from '@/config/theme'
 import { useAuthStore } from '@/stores/auth'

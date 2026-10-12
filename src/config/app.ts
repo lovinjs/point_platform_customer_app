@@ -7,6 +7,8 @@ export const appConfig = Object.freeze({
   title: import.meta.env.VITE_APP_TITLE?.trim() || '平台积分',
   apiBaseUrl: normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL),
   wechatAuthEnabled: import.meta.env.VITE_WECHAT_AUTH_ENABLED === 'true',
+  releaseChannel: import.meta.env.VITE_RELEASE_CHANNEL === 'staging' ? 'staging' : 'production',
+  icpFilingNumber: import.meta.env.VITE_ICP_FILING_NUMBER?.trim() || '',
   requestTimeoutMs: 10_000,
 })
 

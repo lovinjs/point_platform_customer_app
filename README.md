@@ -8,11 +8,14 @@
 npm run dev:h5
 npm run type-check
 npm run build:h5
+npm run build:h5:staging
 npm run build:mp-weixin
 npm run check
 ```
 
 `npm run check` 会依次执行严格类型检查、H5生产构建和微信小程序构建。
+
+`npm run build:h5:staging` 使用 `.env.staging`，单独输出到 `dist/build/h5-staging`，不覆盖普通 H5 构建。预发布部署步骤见 [H5 预发布部署](docs/h5-staging-deployment.md)。
 
 修改 `pages.json` 中的页面列表后，需要停止并重新运行 H5；已有开发进程只做样式和组件热更新，不会重建完整路由表。
 

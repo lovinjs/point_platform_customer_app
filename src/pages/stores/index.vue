@@ -1,5 +1,6 @@
 <template>
   <view class="page-shell stores-page">
+    <release-notice />
     <view class="hero-card">
       <view class="hero-card__mark">
         <wd-icon name="store" size="48rpx" :color="themeColors.white" />
@@ -107,6 +108,7 @@
       />
     </view>
 
+    <site-footer />
     <wd-toast />
   </view>
 </template>
@@ -117,6 +119,8 @@ import { onPullDownRefresh, onReachBottom, onShow } from '@dcloudio/uni-app'
 import { useToast } from '@/uni_modules/wot-ui'
 import { getErrorMessage } from '@/api/error'
 import { getCustomerStores } from '@/api/stores'
+import ReleaseNotice from '@/components/release-notice.vue'
+import SiteFooter from '@/components/site-footer.vue'
 import { themeColors } from '@/config/theme'
 import type { CustomerStore } from '@/types/store'
 

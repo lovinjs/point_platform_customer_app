@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly VITE_API_BASE_URL: string;
   readonly VITE_DEV_PROXY_TARGET?: string;
   readonly VITE_WECHAT_AUTH_ENABLED: "true" | "false";
+  readonly VITE_RELEASE_CHANNEL?: "staging" | "production";
+  readonly VITE_ICP_FILING_NUMBER?: string;
 }
 
 interface ImportMeta {

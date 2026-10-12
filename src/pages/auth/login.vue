@@ -1,5 +1,6 @@
 <template>
   <view class="page-shell login-page">
+    <release-notice />
     <view class="login-mark">积</view>
     <text class="login-title">微信安全登录</text>
     <text class="login-description">
@@ -43,6 +44,7 @@
     </wd-button>
     <text class="login-help">平台不会获取或保存你的微信密码</text>
 
+    <site-footer />
     <wd-toast />
   </view>
 </template>
@@ -51,6 +53,8 @@
 import { ref } from 'vue'
 import { useToast } from '@/uni_modules/wot-ui'
 import { getErrorMessage } from '@/api/error'
+import ReleaseNotice from '@/components/release-notice.vue'
+import SiteFooter from '@/components/site-footer.vue'
 import { startCustomerLogin } from '@/platform/auth'
 
 const authorizing = ref(false)
