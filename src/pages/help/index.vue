@@ -58,18 +58,25 @@
     <view class="service-notice surface-card">
       <wd-icon name="info-circle" size="34rpx" :color="themeColors.primary" />
       <view class="service-notice__copy">
-        <text class="service-notice__title">当前为开发测试阶段</text>
+        <text class="service-notice__title">联系穹音无人机客服</text>
         <text class="service-notice__description">
-          正式客服和投诉渠道将在运营主体确定后公布。
+          充值退款、账户问题、服务投诉及个人信息权利请求，请通过邮箱联系平台。
         </text>
+        <text class="service-notice__email" selectable>{{ platformInfo.supportEmail }}</text>
+        <wd-button type="primary" variant="soft" size="small" round @click="copySupportEmail">
+          复制客服邮箱
+        </wd-button>
       </view>
     </view>
+    <wd-toast />
   </view>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useToast } from '@/uni_modules/wot-ui'
 import { privacyPolicyDocument, userAgreementDocument } from '@/config/legal'
+import { platformInfo } from '@/config/platform'
 import { themeColors } from '@/config/theme'
 
 interface HelpQuestion {
@@ -79,18 +86,35 @@ interface HelpQuestion {
 }
 
 const activeQuestion = ref('')
+const toast = useToast()
+
+const copySupportEmail = (): void => {
+  uni.setClipboardData({
+    data: platformInfo.supportEmail,
+    showToast: false,
+    success: () => toast.success('客服邮箱已复制'),
+    fail: () => toast.warning('复制失败，请长按邮箱复制'),
+  })
+}
+
 const questions: HelpQuestion[] = [
   {
     id: 'points',
     title: '平台积分如何使用？',
     answer:
-      '当前1元对应1积分，积分暂不过期，可在正常营业的合作门店通用。积分不是现金，不支持转账或私下交易。',
+      '1元对应1积分，积分不设有效期，可在平台公示且正常合作的门店使用。积分不是现金，不计利息，不支持用户间转账或私下交易。',
   },
   {
     id: 'recharge',
     title: '如何为账户充值？',
     answer:
-      '当前采用线下充值模式。充值款进入平台账户，门店工作人员确认实际到账后，在后台为你的账户创建充值订单。',
+      '当前仅采用线下向平台账户付款的方式，尚未开通网页微信支付。付款前先确认可用门店和平台收款信息，工作人员核实平台实际到账后登记充值订单。没有可用合作门店时，请勿充值。',
+  },
+  {
+    id: 'no-stores',
+    title: '目前没有合作门店，可以先充值吗？',
+    answer:
+      '不可以。合作门店筹备期间，可以浏览公开页面、登录并管理账户，但请勿充值。待真实合作门店加入并公示服务后，再确认是否需要充值。',
   },
   {
     id: 'consumption',
@@ -108,7 +132,7 @@ const questions: HelpQuestion[] = [
     id: 'refund',
     title: '充值后可以退款吗？',
     answer:
-      '只有一笔充值对应的积分尚未发生消费时，才具备整单退款的基础条件；目前不支持部分退款。已确认完成的消费原则上不支持退款，法律法规另有规定的除外。',
+      '当前系统支持符合条件的整笔未消费充值退款登记，暂不提供部分退款入口。退款、未履约或服务质量争议，请通过客服邮箱申请核查；系统限制不排除依法请求退费或其他救济的权利。不要向客服发送密码或验证码。',
   },
   {
     id: 'pin',
@@ -267,6 +291,7 @@ const openPrivacyPolicy = (): void => {
 
 .service-notice__copy {
   flex: 1;
+  min-width: 0;
 }
 
 .service-notice__title {
@@ -280,6 +305,15 @@ const openPrivacyPolicy = (): void => {
   color: var(--app-color-text-secondary);
   font-size: 21rpx;
   line-height: 1.6;
+}
+
+.service-notice__email {
+  display: block;
+  margin: 14rpx 0 20rpx;
+  color: var(--app-color-primary);
+  font-size: 23rpx;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
 }
 
 :deep(.wd-collapse-item__header) {

@@ -7,14 +7,14 @@
       <text class="legal-hero__eyebrow">法律与规则</text>
       <text class="legal-hero__title">{{ document.title }}</text>
       <view class="legal-hero__meta">
-        <wd-tag type="warning" variant="light" round>{{ document.statusLabel }}</wd-tag>
+        <wd-tag type="primary" variant="light" round>{{ document.statusLabel }}</wd-tag>
         <text>版本 {{ document.version }}</text>
       </view>
     </view>
 
-    <view class="draft-notice surface-card">
-      <wd-icon name="info-circle" size="34rpx" :color="themeColors.warning" />
-      <text>{{ document.draftNotice }}</text>
+    <view class="document-notice surface-card">
+      <wd-icon name="info-circle" size="34rpx" :color="themeColors.primary" />
+      <text>{{ document.notice }}</text>
     </view>
 
     <view class="document-meta surface-card">
@@ -48,9 +48,21 @@
           <text>{{ item }}</text>
         </view>
       </view>
+      <view v-if="section.links?.length" class="legal-section__links">
+        <view v-for="link in section.links" :key="link.url">
+          <!-- #ifdef H5 -->
+          <a class="legal-section__link" :href="link.url" target="_blank" rel="noopener noreferrer">
+            {{ link.title }}
+          </a>
+          <!-- #endif -->
+          <!-- #ifndef H5 -->
+          <text class="legal-section__link" selectable>{{ link.title }}：{{ link.url }}</text>
+          <!-- #endif -->
+        </view>
+      </view>
     </view>
 
-    <text class="legal-footer">请在正式上线前再次核对当前文档版本</text>
+    <text class="legal-footer">你可以随时在帮助中心查阅当前文档版本</text>
   </view>
 </template>
 
@@ -117,21 +129,23 @@ defineProps<{
   font-size: 21rpx;
 }
 
-.draft-notice {
+.document-notice {
   display: flex;
   align-items: flex-start;
   gap: 16rpx;
   margin-top: 24rpx;
   padding: 24rpx;
-  border-color: var(--app-color-warning-border);
-  background: var(--app-color-warning-soft);
-  color: var(--app-color-warning-text);
+  border-color: var(--app-color-border);
+  background: var(--app-color-primary-50);
+  color: var(--app-color-text-secondary);
   font-size: 22rpx;
   line-height: 1.65;
 }
 
-.draft-notice text {
+.document-notice text {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .document-meta {
@@ -175,6 +189,7 @@ defineProps<{
 }
 
 .legal-section__paragraph {
+  overflow-wrap: anywhere;
   margin-top: 14rpx;
   color: var(--app-color-text-secondary);
   font-size: 23rpx;
@@ -220,5 +235,19 @@ defineProps<{
   color: var(--app-color-text-placeholder);
   font-size: 20rpx;
   text-align: center;
+}
+
+.legal-section__links {
+  margin-top: 18rpx;
+}
+
+.legal-section__link {
+  display: block;
+  margin-top: 12rpx;
+  color: var(--app-color-primary);
+  font-size: 22rpx;
+  line-height: 1.65;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
 }
 </style>

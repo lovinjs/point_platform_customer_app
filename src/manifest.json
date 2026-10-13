@@ -1,7 +1,7 @@
 {
-    "name" : "平台积分",
+    "name" : "穹音无人机",
     "appid" : "",
-    "description" : "合作门店通用积分消费者端",
+    "description" : "穹音无人机合作门店与平台积分消费者端",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,

@@ -165,7 +165,7 @@ const auth = useAuthStore()
 const refreshing = ref(false)
 const avatarLoadFailed = ref(false)
 
-const welcomeTitle = computed(() => auth.user.value?.nickname || '欢迎使用平台积分')
+const welcomeTitle = computed(() => auth.user.value?.nickname || '欢迎使用' + appConfig.title)
 const avatarSource = computed(() => {
   if (avatarLoadFailed.value) {
     return ''
@@ -174,7 +174,7 @@ const avatarSource = computed(() => {
 })
 const avatarFallbackText = computed(() => {
   const nickname = auth.user.value?.nickname?.trim()
-  return nickname ? Array.from(nickname)[0] : '积'
+  return nickname ? Array.from(nickname)[0] : '穹'
 })
 const balanceDisplay = computed(() =>
   auth.user.value ? auth.user.value.availablePoints.toLocaleString('zh-CN') : '--',

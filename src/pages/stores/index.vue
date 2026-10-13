@@ -48,7 +48,11 @@
     </view>
 
     <view v-else-if="stores.length === 0" class="state-panel state-panel--empty">
-      <wd-empty icon="search" tip="没有找到符合条件的合作门店" />
+      <wd-empty
+        icon="search"
+        :tip="appliedKeyword ? '没有找到符合条件的合作门店' : '合作门店正在筹备，敬请期待'"
+      />
+      <text v-if="!appliedKeyword">暂无可用门店，请勿充值</text>
     </view>
 
     <view v-else class="store-list">

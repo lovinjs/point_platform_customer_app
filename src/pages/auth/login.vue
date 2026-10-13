@@ -1,7 +1,7 @@
 <template>
   <view class="page-shell login-page">
     <release-notice />
-    <view class="login-mark">积</view>
+    <view class="login-mark">穹</view>
     <text class="login-title">微信安全登录</text>
     <text class="login-description">
       登录后可查看平台积分，并由你本人确认每一笔门店消费。

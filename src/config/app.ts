@@ -1,10 +1,12 @@
+import { platformInfo } from '@/config/platform'
+
 const normalizeBaseUrl = (value: string | undefined): string => {
   const normalized = value?.trim() ?? ''
   return normalized === '/' ? '' : normalized.replace(/\/$/, '')
 }
 
 export const appConfig = Object.freeze({
-  title: import.meta.env.VITE_APP_TITLE?.trim() || '平台积分',
+  title: import.meta.env.VITE_APP_TITLE?.trim() || platformInfo.brandName,
   apiBaseUrl: normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL),
   wechatAuthEnabled: import.meta.env.VITE_WECHAT_AUTH_ENABLED === 'true',
   releaseChannel: import.meta.env.VITE_RELEASE_CHANNEL === 'staging' ? 'staging' : 'production',
